@@ -36,9 +36,9 @@
 
         <div class="demo-info">
             <strong>Akun Demo (Password: password123):</strong><br>
-            • Pelapor: <code>andi</code><br>
-            • Relawan: <code>sari</code><br>
-            • Koordinator: <code>budi</code>
+            - Pelapor: <code>kevin</code><br>
+            - Relawan: <code>lycoris</code><br>
+            - Koordinator: <code>skirk</code>
         </div>
     </div>
 </body>
