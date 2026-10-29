@@ -15,33 +15,33 @@ class DatabaseSeeder extends Seeder
     {
         //1. Akun Demo untuk Ketiga Role
         $pelapor1 = User::create([
-            'username'     => 'andi',
-            'nama_lengkap' => 'Pak Andi (Masyarakat Pelapor)',
-            'email'        => 'andi@example.com',
+            'username'     => 'kevin',
+            'nama_lengkap' => 'Kevin Akbar (Masyarakat Pelapor)',
+            'email'        => 'kevin@example.com',
             'password'     => Hash::make('password123'),
             'role'         => 'pelapor',
         ]);
 
         $pelapor2 = User::create([
-            'username'     => 'bambang',
-            'nama_lengkap' => 'Bambang Sudiro',
-            'email'        => 'bambang@example.com',
+            'username'     => 'raihan',
+            'nama_lengkap' => 'Raihan Elshirazy',
+            'email'        => 'raihan@example.com',
             'password'     => Hash::make('password123'),
             'role'         => 'pelapor',
         ]);
 
         $relawan = User::create([
-            'username'     => 'sari',
-            'nama_lengkap' => 'Bu Sari (Relawan Pemantau)',
-            'email'        => 'sari@example.com',
+            'username'     => 'lycoris',
+            'nama_lengkap' => 'Lycoris Rade (Relawan Pemantau)',
+            'email'        => 'lycoris@example.com',
             'password'     => Hash::make('password123'),
             'role'         => 'relawan',
         ]);
 
         $koordinator = User::create([
-            'username'     => 'budi',
-            'nama_lengkap' => 'Budi Pratama (Koordinator Relawan)',
-            'email'        => 'budi@example.com',
+            'username'     => 'skirk',
+            'nama_lengkap' => 'Skirk (Koordinator Relawan)',
+            'email'        => 'skirk@example.com',
             'password'     => Hash::make('password123'),
             'role'         => 'koordinator',
         ]);
