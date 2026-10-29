@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\RekapController;  
 
 Route::get('/', fn() => redirect()->route('login'));
 
@@ -14,17 +13,11 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    
-    Route::get('/dashboard', function () {
-        return view('layout');
-    })->name('dashboard');
+    Route::get('/dashboard', [ReportController::class, 'index'])->name('dashboard');
 
-    //route sementara agar tombol di navbar tidak error
-    Route::get('/reports/create', function () {
-        return "Halaman Form Laporan (Segera Dibuat)";
-    })->name('reports.create');
-
-    Route::get('/rekap', function () {
-        return "Halaman Rekap (Segera Dibuat)";
-    })->name('rekap.index');
+    //route sementara
+    Route::get('/reports/create', fn() => 'Halaman Create')->name('reports.create');
+    Route::get('/reports/{report}', fn($id) => 'Halaman Detail ID: '.$id)->name('reports.show');
+    Route::get('/reports/{report}/edit', fn($id) => 'Halaman Edit ID: '.$id)->name('reports.edit');
+    Route::get('/rekap', fn() => 'Halaman Rekap')->name('rekap.index');
 });
