@@ -112,4 +112,42 @@ class ReportController extends Controller
 
         return back()->with('success', 'Status laporan berhasil diperbarui.');
     }
+    public function edit(Report $report)
+    {
+        //BR-02
+        if ($report->user_id !== auth()->id() || $report->status !== 'menunggu_peninjauan') {
+            abort(403, 'Laporan tidak dapat diedit karena sudah ditinjau atau bukan milik Anda.');
+        }
+
+        $areas = Area::all();
+        return view('reports.edit', compact('report', 'areas'));
+    }
+
+    public function update(Request $request, Report $report)
+    {
+        if ($report->user_id !== auth()->id() || $report->status !== 'menunggu_peninjauan') {
+            abort(403, 'Laporan tidak dapat diedit karena sudah ditinjau atau bukan milik Anda.');
+        }
+
+        $validated = $request->validate([
+            'area_id'        => ['required', 'exists:areas,id'],
+            'judul'          => ['required', 'string', 'max:150'],
+            'deskripsi'      => ['required', 'string'],
+            'latitude'       => ['required', 'numeric', 'between:-11.0,6.0'],
+            'longitude'      => ['required', 'numeric', 'between:95.0,141.0'],
+            'waktu_kejadian' => ['required', 'date', 'before_or_equal:now'],
+            'bukti'          => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+        ]);
+
+        if ($request->hasFile('bukti')) {
+            if ($report->bukti_path) {
+                Storage::disk('public')->delete($report->bukti_path);
+            }
+            $validated['bukti_path'] = $request->file('bukti')->store('bukti_karhutla', 'public');
+        }
+
+        $report->update($validated);
+
+        return redirect()->route('reports.show', $report->id)->with('success', 'Laporan berhasil diperbarui.');
+    }
 }

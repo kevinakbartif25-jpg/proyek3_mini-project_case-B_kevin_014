@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/reports/{report}', [ReportController::class, 'show'])->name('reports.show');
     Route::post('/reports/{report}/review', [ReportController::class, 'review'])->name('reports.review');
-    Route::get('/reports/{report}/edit', fn($id) => 'Halaman Edit ID: '.$id)->name('reports.edit');
+    Route::get('/reports/{report}/edit', [ReportController::class, 'edit'])->name('reports.edit');
+    Route::put('/reports/{report}', [ReportController::class, 'update'])->name('reports.update');
     Route::get('/rekap', fn() => 'Halaman Rekap')->name('rekap.index');
 });
