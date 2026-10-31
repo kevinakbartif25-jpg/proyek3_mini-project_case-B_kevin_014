@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RekapController;
 
 Route::get('/', fn() => redirect()->route('login'));
 
@@ -34,5 +35,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/reports/{report}/review', [ReportController::class, 'review'])->name('reports.review');
     Route::get('/reports/{report}/edit', [ReportController::class, 'edit'])->name('reports.edit');
     Route::put('/reports/{report}', [ReportController::class, 'update'])->name('reports.update');
-    Route::get('/rekap', fn() => 'Halaman Rekap')->name('rekap.index');
+    Route::get('/rekap', [RekapController::class, 'index'])->name('rekap.index');
 });
