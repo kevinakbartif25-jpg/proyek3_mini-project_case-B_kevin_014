@@ -62,4 +62,54 @@ class ReportController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Laporan kebakaran berhasil dikirim dan menunggu peninjauan relawan.');
     }
+    public function show(Report $report)
+    {
+        //AC-05
+        if (auth()->user()->role === 'pelapor' && $report->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat laporan ini.');
+        }
+
+        $report->load(['user', 'area', 'reviews.user']);
+        return view('reports.show', compact('report'));
+    }
+
+    public function review(Request $request, Report $report)
+    {
+        $user = auth()->user();
+
+        if (!in_array($user->role, ['relawan', 'koordinator'])) {
+            abort(403, 'Anda tidak memiliki hak akses peninjauan.');
+        }
+
+        $request->validate([
+            'status_baru' => ['required', 'string'],
+            'catatan'     => ['required', 'string', 'min:5'],
+        ]);
+
+        $statusLama = $report->status;
+        $statusTujuan = $request->status_baru;
+
+        //BR-03
+        if ($user->role === 'relawan') {
+            if (!in_array($statusTujuan, ['diverifikasi', 'ditolak'])) {
+                return back()->with('error', 'Relawan hanya dapat memverifikasi atau menolak laporan.');
+            }
+        } elseif ($user->role === 'koordinator') {
+            if ($statusTujuan === 'diteruskan' && $statusLama !== 'diverifikasi') {
+                return back()->with('error', 'Laporan hanya dapat diteruskan jika sudah diverifikasi oleh relawan.');
+            }
+        }
+
+        $report->status = $statusTujuan;
+        $report->save();
+
+        $report->reviews()->create([
+            'user_id'           => $user->id,
+            'status_sebelumnya' => $statusLama,
+            'status_baru'       => $statusTujuan,
+            'catatan'           => $request->catatan,
+        ]);
+
+        return back()->with('success', 'Status laporan berhasil diperbarui.');
+    }
 }

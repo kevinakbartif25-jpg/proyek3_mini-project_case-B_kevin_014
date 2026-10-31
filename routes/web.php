@@ -30,7 +30,8 @@ Route::middleware('auth')->group(function () {
             'total_reports'  => $area->reports()->count(),
         ]);
     });
-    Route::get('/reports/{report}', fn($id) => 'Halaman Detail ID: '.$id)->name('reports.show');
+    Route::get('/reports/{report}', [ReportController::class, 'show'])->name('reports.show');
+    Route::post('/reports/{report}/review', [ReportController::class, 'review'])->name('reports.review');
     Route::get('/reports/{report}/edit', fn($id) => 'Halaman Edit ID: '.$id)->name('reports.edit');
     Route::get('/rekap', fn() => 'Halaman Rekap')->name('rekap.index');
 });
