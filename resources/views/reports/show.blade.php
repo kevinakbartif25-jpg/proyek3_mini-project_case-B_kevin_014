@@ -6,7 +6,7 @@
     <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>{{ $report->judul }}</h2>
         <span class="badge badge-{{ explode('_', $report->status)[0] }}" style="font-size:1em;">
-            {{ str_replace('_', ' ', strtoupper($report->status)) }}
+            {{ $report->status === 'menunggu_peninjauan' ? 'DITINJAU' : str_replace('_', ' ', strtoupper($report->status)) }}
         </span>
     </div>
 

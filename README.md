@@ -1,5 +1,4 @@
 # Sistem Pelaporan dan Pemantauan Karhutla (Kasus B)
-
 Mini Project Proyek 3 - D3 Teknik Informatika
 
 ## Identitas
@@ -13,7 +12,7 @@ Mini Project Proyek 3 - D3 Teknik Informatika
 - MySQL / MariaDB (XAMPP)
 - Web Browser dengan JavaScript aktif
 
-## Langkah Instalasi & Konfigurasi
+## Langkah Konfigurasi
 1. Clone repository ini:
    ```bash
    git clone <URL_REPOSITORY>
@@ -48,13 +47,11 @@ Mini Project Proyek 3 - D3 Teknik Informatika
 
 ## Akun Demo Pengujian
 Semua akun demo menggunakan password default: password123
-
-| Role | Username | Password | Deskripsi Tugas |
-| --- | --- | --- | --- |
-| Pelapor 1 | kevin | password123 | Warga pelapor kejadian karhutla |
-| Pelapor 2 | raihan | password123 | Warga pelapor kedua (uji kepemilikan dan privasi) |
-| Relawan Pemantau | lycoris | password123 | Verifikator dan peninjau laporan di lapangan |
-| Koordinator Relawan | skirk | password123 | Penerus laporan ke BPBD/Damkar dan pengawas rekap |
+Role                   |Username
+- Pelapor 1            :kevin
+- Pelapor 2            :raihan
+- Relawan Pemantau     :lycoris
+- Koordinator Relawan  :skirk
 
 ## Cara Menjalankan Aplikasi
 1. Jalankan development server:

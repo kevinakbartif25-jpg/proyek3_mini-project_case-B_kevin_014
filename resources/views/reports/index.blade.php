@@ -16,7 +16,7 @@
         
         <select name="status" style="padding:6px;">
             <option value="">-- Semua Status --</option>
-            <option value="menunggu_peninjauan" {{ request('status') == 'menunggu_peninjauan' ? 'selected' : '' }}>Menunggu Peninjauan</option>
+            <option value="menunggu_peninjauan" {{ request('status') == 'menunggu_peninjauan' ? 'selected' : '' }}>Ditinjau</option>
             <option value="diverifikasi" {{ request('status') == 'diverifikasi' ? 'selected' : '' }}>Diverifikasi</option>
             <option value="ditolak" {{ request('status') == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
             <option value="diteruskan" {{ request('status') == 'diteruskan' ? 'selected' : '' }}>Diteruskan</option>
@@ -58,7 +58,7 @@
                     @endif
                     <td>
                         <span class="badge badge-{{ explode('_', $r->status)[0] }}">
-                            {{ str_replace('_', ' ', strtoupper($r->status)) }}
+                            {{ $r->status === 'menunggu_peninjauan' ? 'DITINJAU' : str_replace('_', ' ', strtoupper($r->status)) }}
                         </span>
                     </td>
                     <td>
