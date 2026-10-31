@@ -38,4 +38,28 @@ class ReportController extends Controller
 
         return view('reports.index', compact('reports', 'areas'));
     }
+    public function create()
+    {
+        if (auth()->user()->role !== 'pelapor') {
+            abort(403, 'Hanya pelapor yang dapat membuat laporan baru.');
+        }
+
+        $areas = Area::all();
+        return view('reports.create', compact('areas'));
+    }
+
+    public function store(StoreReportRequest $request)
+    {
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+        $data['status'] = 'menunggu_peninjauan'; // BR-01
+
+        if ($request->hasFile('bukti')) {
+            $data['bukti_path'] = $request->file('bukti')->store('bukti_karhutla', 'public');
+        }
+
+        Report::create($data);
+
+        return redirect()->route('dashboard')->with('success', 'Laporan kebakaran berhasil dikirim dan menunggu peninjauan relawan.');
+    }
 }
